@@ -1,6 +1,6 @@
 import pytest
 
-from emenu.users.models import User
+from django.contrib.auth import get_user_model
 from emenu.users.tests.factories import UserFactory
 
 
@@ -10,5 +10,5 @@ def media_storage(settings, tmpdir):
 
 
 @pytest.fixture
-def user() -> User:
+def user() -> get_user_model():
     return UserFactory()
