@@ -21,9 +21,9 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    username = None
-    first_name = None
-    last_name = None
+    username = None     # type: ignore
+    first_name = None   # type: ignore
+    last_name = None    # type: ignore
     name = CharField(_('name'), max_length=255, blank=True)
     email = EmailField(_('email address'), blank=False, max_length=255, unique=True)
 
@@ -31,7 +31,7 @@ class User(AbstractUser):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = []  # type: ignore
 
     def __str__(self):
         return self.email
