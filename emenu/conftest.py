@@ -1,6 +1,6 @@
 import pytest
-
 from django.contrib.auth import get_user_model
+
 from emenu.users.tests.factories import UserFactory
 
 
