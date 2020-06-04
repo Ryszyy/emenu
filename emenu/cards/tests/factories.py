@@ -1,10 +1,11 @@
 import factory
-from emenu.cards.models import Cards, Dishes
+
+from emenu.cards.models import Card, Dish
 
 
 class CardFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Cards
+        model = Card
         django_get_or_create = ('name',)
 
     name = factory.Sequence(lambda n: f'Card{n}')
@@ -23,8 +24,9 @@ class CardFactory(factory.DjangoModelFactory):
 
 class DishFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Dishes
+        model = Dish
 
     name = factory.Sequence(lambda n: "Dish #%s" % n)
+    description = factory.Sequence(lambda n: "Description #%s" % n)
     price = factory.Faker("random_int")
     preparation_time = factory.Faker("random_int")

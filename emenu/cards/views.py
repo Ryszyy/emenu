@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import mixins, permissions, viewsets
 
-# Create your views here.
+from emenu.cards.models import Dish
+from emenu.cards.serializers import DishSerializer
+
+
+class DishViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
+    queryset = Dish.objects.all()
+    serializer_class = DishSerializer
+    permission_classes = [permissions.IsAuthenticated]

@@ -1,14 +1,14 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-# from emenu.users.api.views import UserViewSet
+from emenu.cards.views import DishViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
 else:
     router = SimpleRouter()
 
-# router.register("users", UserViewSet)
+router.register("dishes", DishViewSet)
 
 
 app_name = "api"
