@@ -6,13 +6,9 @@ eMenu - Menu cards API
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-     :target: https://github.com/ambv/black
-     :alt: Black code style
-
-
-:License: MIT
-
+.. image:: https://travis-ci.org/Ryszyy/emenu.svg?branch=master
+     :target: https://travis-ci.org/Ryszyy/emenu
+     :alt: Build Status
 
 
 Build the Stack
@@ -40,6 +36,15 @@ Execute Management Commands
 
 $ docker-compose -f local.yml run --rm django python manage.py migrate
 $ docker-compose -f local.yml run --rm django python manage.py createsuperuser
+
+
+API endpoint layout
+^^^^^^^^^^^^^^^^^^^
+You can check the endpoint layout on http://localhost:8000/api/schema/swagger-ui/
+
+.. _http://localhost:8000/api/schema/swagger-ui/: http://localhost:8000/api/schema/swagger-ui/
+
+Make sure that stack is running.
 
 Type checks and linting
 ^^^^^^^^^^^^^^^^^^^^^^^

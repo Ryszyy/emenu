@@ -70,7 +70,8 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "emenu.users"
+    "emenu.users",
+    "emenu.cards"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

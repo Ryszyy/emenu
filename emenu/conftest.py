@@ -3,8 +3,6 @@ from django.contrib.auth import get_user_model
 
 from emenu.users.tests.factories import UserFactory
 
-User = get_user_model()
-
 
 @pytest.fixture(autouse=True)
 def media_storage(settings, tmpdir):
@@ -12,5 +10,5 @@ def media_storage(settings, tmpdir):
 
 
 @pytest.fixture
-def user() -> User:  # type: ignore
+def user() -> get_user_model():  # type: ignore
     return UserFactory()
