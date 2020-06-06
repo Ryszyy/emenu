@@ -26,7 +26,6 @@ class PrivateDishesApi(APITestCase):
     def test_create_dish(self):
         dish_payload = DishFactory().__dict__
         request = self.client.post(self.url, dish_payload)
-        print(request.data, flush=True)
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         dish = Dish.objects.get(id=request.data["id"])
         serial_dish = DishSerializer(dish)

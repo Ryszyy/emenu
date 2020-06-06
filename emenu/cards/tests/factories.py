@@ -9,6 +9,7 @@ class CardFactory(factory.DjangoModelFactory):
         django_get_or_create = ('name',)
 
     name = factory.Sequence(lambda n: f'Card{n}')
+    description = factory.Sequence(lambda n: "Description #%s" % n)
 
     @factory.post_generation
     def dishes(self, create, extracted, **kwargs):
@@ -20,6 +21,13 @@ class CardFactory(factory.DjangoModelFactory):
             # A list of groups were passed in, use them
             for dish in extracted:
                 self.dishes.add(dish)
+
+
+def get_card_payload():
+    payload = CardFactory.build().__dict__
+    for key in ["id", "add_date", "updated", "_state"]:
+        payload.pop(key, None)
+    return payload
 
 
 class DishFactory(factory.DjangoModelFactory):
