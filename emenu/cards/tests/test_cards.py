@@ -1,3 +1,4 @@
+import factory
 from django.db.models import Count
 from django.test import TestCase
 from django.urls import reverse
@@ -12,6 +13,17 @@ from emenu.users.tests.factories import UserFactory
 
 def detail_url(recipe_id):
     return reverse('api:card-detail', args=[recipe_id])
+
+
+def ordering_url(ordering):
+    return reverse("api:card-list") + f"?ordering={ordering}"
+
+
+def create_cards():
+    for _ in range(10):
+        s_dish_factory = factory.Faker("random_int", min=2, max=10).generate() * "DishFactory(), "
+        s_dish_factory = s_dish_factory[:-2]
+        CardFactory.create(dishes=(eval(s_dish_factory)))
 
 
 class CardsModelTest(TestCase):
@@ -37,21 +49,28 @@ class PublicCardsApi(APITestCase):
         self.assertIn(serial_cards.data[1], request.data)
 
     def test_cards_list_sorting_using_parameters(self):
-        request = self.client.get(self.url, {"sort": "num-of-dishes"})
+        create_cards()
+        request = self.client.get(ordering_url("dishes,name"))
         self.assertEqual(request.status_code, status.HTTP_200_OK)
-        cards = Card.objects.annotate(num_of_dishes=Count('dishes')).order_by("num_of_dishes")
+        cards = Card.objects.annotate(num_of_dishes=Count('dishes')).order_by("num_of_dishes", "name")
 
         serial_cards = CardSerializer(cards, many=True)
         self.assertEqual(request.data, serial_cards.data)
 
-        request = self.client.get(self.url, {"sort": "name"})
+        request = self.client.get(ordering_url("name"))
         cards = Card.objects.all().order_by("name")
         serial_cards = CardSerializer(cards, many=True)
         self.assertEqual(request.data, serial_cards.data)
 
     def test_cards_list_filtering_using_date(self):
-        # Filtrowanie listy po nazwie oraz okresie dodanie i ostatnie aktualizacji
-        pass
+        create_cards()
+        card_name = "Test Card"
+        CardFactory.create(name=card_name, dishes=(DishFactory(),))
+        request = self.client.get(self.url, {"name": card_name})
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        card = Card.objects.filter(name=card_name)
+        serial_cards = CardSerializer(card, many=True)
+        self.assertEqual(request.data, serial_cards.data)
 
     def test_cards_details_with_dishes(self):
         temp_card = CardFactory.create(dishes=(DishFactory(), DishFactory()))
