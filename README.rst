@@ -36,7 +36,7 @@ Execute Management Commands
 
 $ docker-compose -f local.yml run --rm django python manage.py migrate
 $ docker-compose -f local.yml run --rm django python manage.py createsuperuser
-
+$ docker-compose -f local.yml run --rm django python manage.py init_data
 
 API endpoint layout
 ^^^^^^^^^^^^^^^^^^^
