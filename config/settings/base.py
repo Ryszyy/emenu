@@ -4,6 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
+from celery.schedules import crontab
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # emenu/
@@ -270,7 +271,12 @@ CELERY_TASK_TIME_LIMIT = 5 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-# django-allauth
+CELERY_BEAT_SCHEDULE = {
+    "send_mails": {
+        "task": "emenu.users.tasks.send_mail_to_users",
+        "schedule": crontab(minute=0, hour=10)
+    }
+}
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
